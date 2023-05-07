@@ -12,13 +12,17 @@ def draw_pixel(x, y, pixel_color, per_width, per_height):
     fill(prev_color)
     
     
-def draw_object(object, center_x, center_y, diameter):
+def draw_objects(obj_list, resource, diameter):
+    Guard()
+    for obj in obj_list:
+        draw_object(resource, obj[0], obj[1], diameter)
+    
+def draw_object(resource, center_x, center_y, diameter):
     Guard()
     start_x = center_x - diameter * 0.5
     start_y = center_y - diameter * 0.5
-    print("1")
-    per_height = diameter / max(len(object), 1)
-    for y, x_array in enumerate(object): 
+    per_height = diameter / max(len(resource), 1)
+    for y, x_array in enumerate(resource):
         per_width = diameter / max(len(x_array), 1)
         for x, obj_color in enumerate(x_array):
             draw_x = start_x + per_width * x
