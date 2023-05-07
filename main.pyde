@@ -21,8 +21,22 @@ if RUN_UNITTEST:
     unittest.Run()
     main_logger.info("unittest end")
     sys.exit()
-    
+"""
+ [colors.RED, colors.YELLOW, colors.RED]
+          [colors.RED, colors.YELLOW, colors.RED]
+          [colors.Empty, colors.RED, colors.EMPTY]
+          [colors.Empty, colors.GREEN, colors.EMPTY]
+          [colors.GREEN, colors.GREEN, colors.EMPTY]
+          [colors.Empty, colors.GREEN, colors.EMPTY]"""
+
 stars = []
+flower = []
+flower.append([colors.EMPTY, colors.RED, colors.EMPTY])
+flower.append([colors.RED, colors.YELLOW, colors.RED])
+flower.append([colors.EMPTY, colors.RED, colors.EMPTY])
+flower.append([colors.EMPTY, colors.GREEN, colors.EMPTY])
+flower.append([colors.GREEN, colors.GREEN, colors.EMPTY])
+flower.append([colors.EMPTY, colors.GREEN, colors.EMPTY])
 
 def setup():
     GuardDebug()
@@ -31,12 +45,12 @@ def setup():
         noStroke()
     size(WINDOW_WIDTH, WINDOW_HEIGHT)
     prev_time = millis()
-    stars.extend(object_maker.make_stars(0, 0, width, height, 3, 20))
+    stars.extend(object_maker.make_stars(0, 0, width, height, 1, 20))
     
 def draw():
     clear()
     GuardDebug()
-    global grow_height, grow_speed, grow_time, prev_time
+    global grow_height, grow_speed, grow_time, prev_time, flower
     grow_height += GROW_SPEED
     
     current_time = millis()
@@ -46,7 +60,9 @@ def draw():
     prev_time = current_time
     
     graphic.draw_star(stars)
-    
+    graphic.draw_pixel(width*0.5, height*0.5, colors.RED, 20, 20)
+    graphic.draw_object(flower, width*0.5,height*0.8, 100)
+            
     if grow_height < PHASE_1:
         pass
     elif grow_height < PHASE_2:
