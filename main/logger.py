@@ -17,9 +17,6 @@ def get(logger_name):
         return loggers[logger_name]
     
     logger = logging.getLogger(logger_name)
-    file_handler = logging.FileHandler(os.path.join(LOG_DIR, logger_name + '.log'))
-    file_handler.setFormatter(LOG_FORMATTER)
-    logger.addHandler(file_handler)
     
     loggers[logger_name] = logger
     

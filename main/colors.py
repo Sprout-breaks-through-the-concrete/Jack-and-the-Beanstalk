@@ -3,4 +3,5 @@ GREEN = color(0, 255, 0)
 BLUE = color(0, 0, 255)
 WHITE = color(255, 255, 255)
 YELLOW = color(255, 255, 0)
+GROWN = color(165, 42, 42)
 EMPTY = None
