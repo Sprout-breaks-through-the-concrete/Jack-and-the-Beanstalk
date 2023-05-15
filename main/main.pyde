@@ -39,7 +39,7 @@ def setup():
     #object_list.append([resource.beanstalk2, width*0.5, height*0.9, 60, 88])
     #object_list.append([resource.beanstalk3, width*0.5, height*0.9, 70, 88])
     #object_list.append([resource.beanstalk4, width*0.5, height*0.9, 80, 180])
-    #object_list.append([resource.beanstalk5, width*0.5, height*0.8, 80, 240])
+    object_list.append([resource.beanstalk5, width*0.5, height*0.8, 80, 240])
     move_list.append([resource.cloud1, width*0.01, height*0.05, 90, 60])
     move_list.append([resource.cloud1, width*0.3, height*0.1, 60, 40])
     move_list.append([resource.cloud1, width, height*0.25, 90, 60])
