@@ -24,6 +24,7 @@ stars = []
 object_list = []
 
 def setup():
+
     GuardDebug()
     global stars, flower_list
     if USE_STROKE == False:
@@ -34,6 +35,8 @@ def setup():
     object_list.append([resource.flower, width*0.2, height*0.5, 100, 150])
     object_list.append([resource.flower, width*0.5, height*0.8, 150, 50])
     object_list.append([resource.tree, width*0.8, height*0.8, 100, 150])
+    object_list.append([resource.bird, width*0.3, height*0.3, 110, 110])
+    object_list.append([resource.bird_V2, width*0.2, height*0.2, 150, 110])
     
 def draw():
     GuardDebug()
@@ -60,7 +63,7 @@ def draw():
         pass
        
     
-    
+   
 
     
     

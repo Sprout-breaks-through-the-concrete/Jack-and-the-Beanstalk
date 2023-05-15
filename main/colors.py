@@ -4,4 +4,7 @@ BLUE = color(0, 0, 255)
 WHITE = color(255, 255, 255)
 YELLOW = color(255, 255, 0)
 GROWN = color(165, 42, 42)
+gray = color(128, 128, 128)
+SILVER = color(192, 192, 192)
+STEELBLUE = color(070, 130, 180)
 EMPTY = None
