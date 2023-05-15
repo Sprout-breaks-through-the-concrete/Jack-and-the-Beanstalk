@@ -7,4 +7,6 @@ GROWN = color(165, 42, 42)
 gray = color(128, 128, 128)
 SILVER = color(192, 192, 192)
 STEELBLUE = color(070, 130, 180)
+POWDERBLUE = color(176, 224, 230)
+BLACK = color(0, 0, 0)
 EMPTY = None

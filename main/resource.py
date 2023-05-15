@@ -23,7 +23,21 @@ bird.append([colors.STEELBLUE, colors.STEELBLUE, colors.EMPTY, colors.STEELBLUE,
 bird.append([colors.STEELBLUE, colors.EMPTY, colors.EMPTY, colors.EMPTY, colors.GROWN, colors.EMPTY, colors.EMPTY, colors.EMPTY, colors.STEELBLUE])
 
 bird_V2 = []
-bird.append([colors.EMPTY, colors.EMPTY, colors.WHITE, colors.EMPTY, colors.EMPTY, colors.EMPTY, colors.WHITE, colors.EMPTY, colors.EMPTY])
-bird.append([colors.EMPTY, colors.WHITE, colors.WHITE, colors.WHITE, colors.EMPTY, colors.WHITE, colors.WHITE, colors.WHITE, colors.EMPTY])
-bird.append([colors.WHITE, colors.WHITE, colors.EMPTY, colors.WHITE, colors.WHITE, colors.WHITE, colors.EMPTY, colors.WHITE, colors.WHITE])
-bird.append([colors.WHITE, colors.EMPTY, colors.EMPTY, colors.EMPTY, colors.GROWN, colors.EMPTY, colors.EMPTY, colors.EMPTY, colors.WHITE])
+bird_V2.append([colors.EMPTY, colors.EMPTY, colors.WHITE, colors.EMPTY, colors.EMPTY, colors.EMPTY, colors.WHITE, colors.EMPTY, colors.EMPTY])
+bird_V2.append([colors.EMPTY, colors.WHITE, colors.WHITE, colors.WHITE, colors.EMPTY, colors.WHITE, colors.WHITE, colors.WHITE, colors.EMPTY])
+bird_V2.append([colors.WHITE, colors.WHITE, colors.EMPTY, colors.WHITE, colors.WHITE, colors.WHITE, colors.EMPTY, colors.WHITE, colors.WHITE])
+bird_V2.append([colors.WHITE, colors.EMPTY, colors.EMPTY, colors.EMPTY, colors.GROWN, colors.EMPTY, colors.EMPTY, colors.EMPTY, colors.WHITE])
+
+bird_V3 = []
+bird_V3.append([colors.EMPTY,      colors.EMPTY,      colors.EMPTY,      colors.EMPTY,      colors.EMPTY,      colors.EMPTY,      colors.EMPTY,      colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.EMPTY,      colors.EMPTY,      colors.EMPTY])
+bird_V3.append([colors.EMPTY,      colors.EMPTY,      colors.EMPTY,      colors.EMPTY,      colors.EMPTY,      colors.EMPTY,      colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.EMPTY,      colors.EMPTY])
+bird_V3.append([colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.EMPTY,      colors.EMPTY,      colors.POWDERBLUE, colors.POWDERBLUE, colors.WHITE,      colors.WHITE,      colors.WHITE,      colors.WHITE,      colors.POWDERBLUE, colors.EMPTY])
+bird_V3.append([colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.EMPTY,      colors.POWDERBLUE, colors.POWDERBLUE, colors.WHITE,      colors.WHITE,      colors.BLACK,      colors.WHITE,      colors.POWDERBLUE, colors.EMPTY]) 
+bird_V3.append([colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.WHITE,      colors.WHITE,      colors.WHITE,      colors.WHITE,      colors.YELLOW,     colors.YELLOW])
+bird_V3.append([colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.WHITE,      colors.WHITE,      colors.WHITE,      colors.POWDERBLUE, colors.EMPTY,      colors.EMPTY])
+bird_V3.append([colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.EMPTY,      colors.EMPTY,      colors.EMPTY])
+bird_V3.append([colors.EMPTY,      colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.WHITE,      colors.WHITE,      colors.WHITE,      colors.WHITE,      colors.EMPTY,      colors.EMPTY,      colors.EMPTY])
+bird_V3.append([colors.EMPTY,      colors.EMPTY,      colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.WHITE,      colors.WHITE,      colors.WHITE,      colors.WHITE,      colors.WHITE,      colors.EMPTY,      colors.EMPTY,      colors.EMPTY])
+bird_V3.append([colors.EMPTY,      colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.WHITE,      colors.WHITE,      colors.WHITE,      colors.WHITE,      colors.EMPTY,      colors.EMPTY,      colors.EMPTY,      colors.EMPTY])
+bird_V3.append([colors.EMPTY,      colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.POWDERBLUE, colors.WHITE,      colors.WHITE,      colors.WHITE,      colors.EMPTY,      colors.EMPTY,      colors.EMPTY,      colors.EMPTY,      colors.EMPTY])
+bird_V3.append([colors.EMPTY,      colors.EMPTY,      colors.POWDERBLUE, colors.POWDERBLUE, colors.EMPTY,      colors.EMPTY,      colors.EMPTY,      colors.EMPTY,      colors.EMPTY,      colors.EMPTY,      colors.EMPTY,      colors.EMPTY,      colors.EMPTY])
