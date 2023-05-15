@@ -16,6 +16,9 @@ def draw_objects(obj_list):
     Guard()
     for obj in obj_list:
         draw_object(obj[0], obj[1], obj[2], obj[3], obj[4])
+        
+
+    
     
 def draw_object(resource, center_x, center_y, draw_width, draw_height):
     Guard()
