@@ -21,7 +21,6 @@ main_logger.warning(message)
 main_logger = logger.get("main")
 
 stars = []
-move_list = []
 object_list = []
 
 def setup():
@@ -31,6 +30,7 @@ def setup():
         noStroke()
     size(WINDOW_WIDTH, WINDOW_HEIGHT)
     prev_time = millis()
+    stars.extend(object_maker.make_stars(0, 0, width, height, 1, 20))
     stars.extend(object_maker.make_stars(0, 0, width, height, 1, 20))
 
     move_list.append([resource.cloud1, width*0.01, height*0.05, 90, 60])
@@ -91,7 +91,7 @@ def draw():
 
     
 
-   
+    '''
 
     # Background_universe
 
@@ -191,7 +191,7 @@ def draw():
 
     rect(0, height/1.1, width, height)
 
-    '''
+    
 
     graphic.draw_star(stars)
 
@@ -214,15 +214,25 @@ def draw():
         
 
         if mouseX < width * 0.25:
+
             x -= 1
+
             new_draw_x = x
+
             if new_draw_x < 0 - draw_width * 0.5:
+
                 new_draw_x = width + draw_width * 0.5
 
+            
+
         if mouseX > width * 0.75:
+
            x += 1
-           new_draw_x = x
-           if new_draw_x > width + draw_width * 0.5:
+
+            new_draw_x = x
+
+            if new_draw_x > width + draw_width * 0.5:
+
                 new_draw_x = 0 -draw_width * 0.5
 
         move[1] = new_draw_x
