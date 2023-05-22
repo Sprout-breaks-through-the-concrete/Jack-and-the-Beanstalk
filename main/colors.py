@@ -1,7 +1,11 @@
 RED = color(255, 0, 0)
-GREEN = color(0, 255, 0)
 BLUE = color(0, 0, 255)
 WHITE = color(255, 255, 255)
 YELLOW = color(255, 255, 0)
 GROWN = color(165, 42, 42)
+Y_GREEN = color(200, 255, 0)
+GREEN = color(100,255,0)
+BLACK = color(0)
+GRAY_C = color(50)
+BROWN = color(232,162,20)
 EMPTY = None
