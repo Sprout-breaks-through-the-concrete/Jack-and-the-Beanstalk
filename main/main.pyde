@@ -29,7 +29,8 @@ beanstalk4_list = []
 beanstalk5_list = []
 beanstalk6_list = []
 beanstalk7_list = []
-
+flower_per_size = 10
+flower_anchor = graphic.BOTTOM
 
 def setup():
     GuardDebug()
@@ -39,13 +40,13 @@ def setup():
     size(WINDOW_WIDTH, WINDOW_HEIGHT)
     prev_time = millis()
     stars.extend(object_maker.make_stars(0, 0, width, height, 1, 20))
-    beanstalk1_list.append([resource.beanstalk1, width*0.5, height*0.9, 60, 40])
-    beanstalk2_list.append([resource.beanstalk2, width*0.5, height*0.9, 100, 150])
-    beanstalk3_list.append([resource.beanstalk3, width*0.5, height*0.9, 100, 150])
-    beanstalk4_list.append([resource.beanstalk4, width*0.5, height*0.9, 100, 300])
-    beanstalk5_list.append([resource.beanstalk5, width*0.4, height*0.9, 300, 700])
-    beanstalk6_list.append([resource.beanstalk6, width*0.5, height*0.9, 400, 600])
-    beanstalk7_list.append([resource.beanstalk7, width*0.5, height*0.5, 500, 800])
+    beanstalk1_list.append([resource.beanstalk1, width*0.5, height, 60, 40])
+    beanstalk2_list.append([resource.beanstalk2, width*0.5, height, 100, 150])
+    beanstalk3_list.append([resource.beanstalk3, width*0.5, height, 100, 150])
+    beanstalk4_list.append([resource.beanstalk4, width*0.5, height, 100, 300])
+    beanstalk5_list.append([resource.beanstalk5, width*0.5, height, 300, 700])
+    beanstalk6_list.append([resource.beanstalk6, width*0.5, height, 400, 600])
+    beanstalk7_list.append([resource.beanstalk7, width*0.5, height, 500, 800])
     
 #object_list.append([resource.beanstalk1, width*0.5, height*0.9, 60, 40])
     #object_list.append([resource.beanstalk2, width*0.5, height*0.9, 100, 150])
@@ -58,7 +59,7 @@ def setup():
 def draw():
     GuardDebug()
     clear()
-    global grow_height, grow_speed, grow_time, prev_time, flower_list, flower
+    global grow_height, grow_speed, grow_time, prev_time, flower_list, flower, flower_per_size
     grow_height = height - mouseY
     
     current_time = millis()
@@ -71,25 +72,25 @@ def draw():
     graphic.draw_objects(object_list)
     
     if grow_height < PHASE_1:
-        graphic.draw_objects(beanstalk1_list)
+        graphic.draw_static_objects(beanstalk1_list, flower_per_size, flower_anchor)
         pass
     elif grow_height < PHASE_2:
-        graphic.draw_objects(beanstalk2_list)
+        graphic.draw_static_objects(beanstalk2_list, flower_per_size, flower_anchor)
         pass
     elif grow_height < PHASE_3:
-        graphic.draw_objects(beanstalk3_list)
+        graphic.draw_static_objects(beanstalk3_list, flower_per_size, flower_anchor)
         pass
     elif grow_height < PHASE_4:
-        graphic.draw_objects(beanstalk4_list)
+        graphic.draw_static_objects(beanstalk4_list, flower_per_size, flower_anchor)
         pass
     elif grow_height < PHASE_5:
-        graphic.draw_objects(beanstalk5_list)
+        graphic.draw_static_objects(beanstalk5_list, flower_per_size, flower_anchor)
         pass
     elif grow_height < PHASE_6:
-        graphic.draw_objects(beanstalk6_list)
+        graphic.draw_static_objects(beanstalk6_list, flower_per_size, flower_anchor)
         pass
     else :
-        graphic.draw_objects(beanstalk7_list)
+        graphic.draw_static_objects(beanstalk7_list, flower_per_size, flower_anchor)
         pass
        
     
