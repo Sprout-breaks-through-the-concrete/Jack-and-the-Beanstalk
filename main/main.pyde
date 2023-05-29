@@ -11,7 +11,6 @@ grow_time = 0
 prev_time = 0
 
 logger.init()
-mouseY = 0
 
 """
 main_logger.debug(message)
@@ -65,7 +64,7 @@ def setup():
 def draw():
     GuardDebug()
     clear()
-    global grow_height, grow_speed, grow_time, prev_time, flower_list, flower, flower_per_size, mouseY
+    global grow_height, grow_speed, grow_time, prev_time, flower_list, flower, flower_per_size
     grow_height = height - mouseY
     
     current_time = millis()
@@ -91,7 +90,13 @@ def draw():
         pass
     elif grow_height < PHASE_5:
         graphic.draw_static_objects(beanstalk5_list, flower_per_size, flower_anchor)
-        pass    elifgrow_height<PHASE_6        graphic.draw_static_objects(beanstalk6_list,flower_per_size,flower_anchor)        pass    else :        graphic.draw_static_objects(beanstalk7_list,flower_per_size,flower_anchor)        pass    
+        pass    
+    elif grow_height<PHASE_6:
+        graphic.draw_static_objects(beanstalk6_list,flower_per_size,flower_anchor)        
+        pass    
+    else :        
+        graphic.draw_static_objects(beanstalk7_list,flower_per_size,flower_anchor)        
+        pass    
 # def keyPressed():
 #     if key == CODED:
 #         if keyCode == UP:
@@ -102,7 +107,7 @@ def draw():
 #             for object_y in object_list:
 #                 object_y[2] += 1
 #                 frameRate(2000)       
-def mouseY():
+def keyPressed():
     if mouseY >  WINDOW_HEIGHT:
         for object_y in object_list:
             object_y[2] -= 1
