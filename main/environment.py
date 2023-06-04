@@ -57,4 +57,4 @@ GROW_SPEED = 3
 ORDER:
     DEBUG -> INFO -> WARNING -> ERROR -> CRITICAL  
 """
-LOG_LEVEL = logging.DEBUG
+LOG_LEVEL = logging.INFO
