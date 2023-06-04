@@ -45,10 +45,11 @@ break_max_count = 10
 
 breaking_target = None
 beanstalk_shaking_anim = None
+background_color = None
 
 def setup():
     GuardDebug()
-    global stars, flower_list, beanstalk_shaking_anim, breaking_target, break_sound, spacebar_shaking_anim, spacebar, spacebar_list, grow_height
+    global stars, flower_list, beanstalk_shaking_anim, breaking_target, break_sound, spacebar_shaking_anim, spacebar, spacebar_list, grow_height, background_color
     break_sound = SoundFile(this, "treechop.wav")
 
     if USE_STROKE == False:
@@ -76,12 +77,13 @@ def setup():
     #spacebar_list.append(spacebar)
     spacebar_shaking_anim = animation.Shaking(spacebar, 500, 1, 0, 10, True)
     spacebar_shaking_anim.start()
+    background_color = color(135, 206, 250)
           
 def draw():
     GuardDebug()
     clear()
-    global grow_height, grow_speed, grow_time, prev_time, flower_list, flower, flower_per_size, space_per_size, spacebar, space_anchor, is_final_phase, beanstalk_shaking_anim, spacebar_shaking_anim, spacebar_list
-    
+    global grow_height, grow_speed, grow_time, prev_time, flower_list, flower, flower_per_size, space_per_size, spacebar, space_anchor, is_final_phase, beanstalk_shaking_anim, spacebar_shaking_anim, spacebar_list, background_color
+    background(background_color)
     current_time = millis()
     ellapse_time = current_time - prev_time
     grow_time += ellapse_time
@@ -94,6 +96,7 @@ def draw():
     
     if is_final_phase:
         beanstalk_shaking_anim.update(ellapse_time)
+        spacebar_shaking_anim.update(ellapse_time)
         graphic.draw_static_objects(beanstalk7_list, flower_per_size, flower_anchor)
         graphic.draw_static_objects(spacebar_list, space_per_size, space_anchor)
         return
@@ -151,5 +154,17 @@ def keyPressed():
             object_y[2] += 1
     
 def mouseMoved():
-    global grow_height
+    global grow_height, background_color, is_final_phase
     grow_height = height - mouseY
+    
+    if is_final_phase:
+        return
+    
+    if mouseY >= height * 0.75: #skyblue-pink
+        background_color = lerpColor(color(255, 192, 203), color(135, 206, 250), (mouseY - height * 0.75) / (height * 0.25))
+    elif mouseY >= height * 0.5: #pink-purple
+        background_color = lerpColor(color(128, 0, 128), color(255, 192, 203), (mouseY - height * 0.5) / (height * 0.25))
+    elif mouseY >= height * 0.25:  #purple-navy
+        background_color = lerpColor(color(0, 0, 128), color(128, 0, 128), (mouseY - height * 0.25) / (height * 0.25))
+    else: #navy-black
+        background_color = lerpColor(color(0, 0, 0), color(0, 0, 128), mouseY / (height * 0.25))

@@ -29,7 +29,7 @@ class Shaking:
             return
          
         self.time_anim += ellapse
-        if self.time_anim < self.shake_time or self.is_anim:
+        if self.time_anim < self.shake_time or self.is_repeat:
             if self.norm_x > 0:
                 self.obj[1] = min(self.obj[1] + self.norm_x * self.move_speed, self.start_x + self.range_x)
                 
