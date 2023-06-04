@@ -12,4 +12,7 @@ Y_GREEN = color(200, 255, 0)
 BLACK = color(0)
 GRAY_C = color(50)
 BROWN = color(232,162,20)
+VIOLET = color(238, 130, 238)
+LIMEGREEN = color(50, 205, 50)
+POWDERBLUE = color(176, 224, 230)
 EMPTY = None

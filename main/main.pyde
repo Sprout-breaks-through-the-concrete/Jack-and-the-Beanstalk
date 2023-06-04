@@ -5,6 +5,7 @@ from guard import *
 import object_maker
 import graphic
 import resource
+import resource2
 import animation
 
 grow_height = 0
@@ -38,19 +39,40 @@ space_per_size = 5
 space_anchor = graphic.RIGHT
 spacebar_shaking_anim = None
 
+prev_mouse_x = 0
+prev_mouse_y = 0
+
+bird_list = []
+bird_moving_anim = None
+bird_sound = None
+
 is_final_phase = False
 break_count = 0
 break_sound = None
-break_max_count = 10
+breaking_sound = None
+break_max_count = 3
 
 breaking_target = None
 beanstalk_shaking_anim = None
+beanstalk_breaking_anim = None
 background_color = None
 
 def setup():
     GuardDebug()
-    global stars, flower_list, beanstalk_shaking_anim, breaking_target, break_sound, spacebar_shaking_anim, spacebar, spacebar_list, grow_height, background_color
+    global stars, flower_list, beanstalk_shaking_anim, \
+    breaking_target, break_sound, spacebar_shaking_anim, \
+    spacebar, spacebar_list, grow_height, \
+    background_color, bird_list, bird_moving_anim, \
+    beanstalk_breaking_anim, breaking_sound, bird_sound, \
+    prev_mouse_x, prev_mouse_y
+    
+    
+    prev_mouse_x = width
+    prev_mouse_y = height
+    
     break_sound = SoundFile(this, "treechop.wav")
+    breaking_sound = SoundFile(this, "tree-falling.wav")
+    bird_sound = SoundFile(this, "bird_sound.wav")
 
     if USE_STROKE == False:
         noStroke()
@@ -71,6 +93,7 @@ def setup():
     beanstalk6_list.append([resource.beanstalk6, width*0.5, height, 400, 600])
     breaking_target = [resource.beanstalk7, width*0.5, height, 500, 800]
     beanstalk_shaking_anim = animation.Shaking(breaking_target, 500, 3, 5, 0, False)
+    beanstalk_breaking_anim = animation.Shaking(breaking_target, 500, 3, 5, 9999999, True)
     beanstalk7_list.append(breaking_target)
     spacebar = [resource.spacebar, width * 0.95, height * 0.5, 60, 40]
     spacebar_list.append(spacebar)
@@ -78,11 +101,22 @@ def setup():
     spacebar_shaking_anim = animation.Shaking(spacebar, 500, 1, 0, 10, True)
     spacebar_shaking_anim.start()
     background_color = color(135, 206, 250)
-          
+    bird_list.append([resource2.bird_V1, width*0.1, height*0.6, 50, 50])
+    bird_list.append([resource2.bird_V2, width*0.5, height*0.5, 50, 50])
+    bird_list.append([resource2.bird_V3, width*0.9, height*0.4, 50, 50])
+    
+    bird_moving_anim = animation.BirdMoving(bird_list, -30, width + 30, 150, 10, 2000, 0)
+
 def draw():
     GuardDebug()
     clear()
-    global grow_height, grow_speed, grow_time, prev_time, flower_list, flower, flower_per_size, space_per_size, spacebar, space_anchor, is_final_phase, beanstalk_shaking_anim, spacebar_shaking_anim, spacebar_list, background_color
+    global grow_height, grow_speed, grow_time, \
+     prev_time, flower_list, flower, \
+     flower_per_size, space_per_size, spacebar, \
+     space_anchor, is_final_phase, beanstalk_shaking_anim, \
+     spacebar_shaking_anim, spacebar_list, \
+     background_color, bird_list, bird_moving_anim, \
+     beanstalk_breaking_anim, breaking_sound
     background(background_color)
     current_time = millis()
     ellapse_time = current_time - prev_time
@@ -90,15 +124,16 @@ def draw():
     main_logger.debug("grow_time=" + str(grow_time))
     main_logger.debug("grow_height=" + str(grow_height))
     prev_time = current_time
-    print(grow_height)
     graphic.draw_star(stars)
     #graphic.draw_objects(object_list)
     
     if is_final_phase:
         beanstalk_shaking_anim.update(ellapse_time)
         spacebar_shaking_anim.update(ellapse_time)
+        beanstalk_breaking_anim.update(ellapse_time)
         graphic.draw_static_objects(beanstalk7_list, flower_per_size, flower_anchor)
         graphic.draw_static_objects(spacebar_list, space_per_size, space_anchor)
+        
         return
     
     if grow_height < PHASE_1:
@@ -124,19 +159,28 @@ def draw():
         graphic.draw_static_objects(beanstalk7_list, flower_per_size, flower_anchor)
         graphic.draw_static_objects(spacebar_list, space_per_size, space_anchor)
         pass    
-
+        
+    bird_moving_anim.update(ellapse_time)
+    graphic.draw_objects(bird_list)
+    
+    if bird_moving_anim.is_show():
+        if not bird_sound.isPlaying():
+            bird_sound.play()
+            
 def try_break_beanstalk():
-    global break_count, break_sound, beanstalk_shaking_anim, break_max_count
+    global break_count, break_sound, beanstalk_shaking_anim, break_max_count, beanstalk_breaking_anim, breaking_sound
     
     if beanstalk_shaking_anim.is_anim or break_count >= break_max_count:
         return
     
     break_count += 1
-    break_sound.play()
-    beanstalk_shaking_anim.start()
     
     if break_max_count == break_count:
-        pass
+        breaking_sound.play()
+        beanstalk_breaking_anim.start()
+    else:
+        break_sound.play()    
+        beanstalk_shaking_anim.start()
 
 def keyPressed():
     global is_final_phase, grow_height
@@ -152,13 +196,22 @@ def keyPressed():
     if mouseY <= WINDOW_HEIGHT/2:
         for object_y in object_list:
             object_y[2] += 1
-    
+
 def mouseMoved():
-    global grow_height, background_color, is_final_phase
+    global grow_height, background_color, is_final_phase, prev_mouse_x, prev_mouse_y, bird_list, bird_moving_anim
     grow_height = height - mouseY
+    
+    move_x = prev_mouse_x - mouseX 
+    move_y = prev_mouse_y - mouseY
+    
+    prev_mouse_x = mouseX
+    prev_mouse_y = mouseY
     
     if is_final_phase:
         return
+    
+    for obj in bird_list:
+        bird_moving_anim.offset += move_y * 1
     
     if mouseY >= height * 0.75: #skyblue-pink
         background_color = lerpColor(color(255, 192, 203), color(135, 206, 250), (mouseY - height * 0.75) / (height * 0.25))
