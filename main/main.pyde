@@ -39,6 +39,8 @@ space_per_size = 5
 space_anchor = graphic.RIGHT
 spacebar_shaking_anim = None
 
+move_obj_list = []
+
 prev_mouse_x = 0
 prev_mouse_y = 0
 
@@ -64,10 +66,10 @@ def setup():
     spacebar, spacebar_list, grow_height, \
     background_color, bird_list, bird_moving_anim, \
     beanstalk_breaking_anim, breaking_sound, bird_sound, \
-    prev_mouse_x, prev_mouse_y
+    prev_mouse_x, prev_mouse_y, move_obj_list
     
     
-    prev_mouse_x = width
+    prev_mouse_x = width * 0.5
     prev_mouse_y = height
     
     break_sound = SoundFile(this, "treechop.wav")
@@ -80,11 +82,6 @@ def setup():
     size(WINDOW_WIDTH, WINDOW_HEIGHT)
     prev_time = millis()
     stars.extend(object_maker.make_stars(0, 0, width, height, 1, 20))
-    object_list.append([resource.flower, width*0.2, height*0.5, 100, 150])
-    object_list.append([resource.flower, width*0.5, height*0.8, 150, 50])
-    object_list.append([resource.tree, width*0.8, height*0.8, 100, 150])
-    object_list.append([resource.sun, width*0.2, height*0.7, 100, 150])
-    object_list.append([resource.moon, width*0.8, height*0.5, 200, 100])
     beanstalk1_list.append([resource.beanstalk1, width*0.5, height, 60, 40])
     beanstalk2_list.append([resource.beanstalk2, width*0.5, height, 100, 150])
     beanstalk3_list.append([resource.beanstalk3, width*0.5, height, 100, 150])
@@ -106,6 +103,11 @@ def setup():
     bird_list.append([resource2.bird_V3, width*0.9, height*0.4, 50, 50])
     
     bird_moving_anim = animation.BirdMoving(bird_list, -30, width + 30, 150, 10, 2000, 0)
+    
+    move_obj_list.append([resource.tree, width*0.1, height*0.85, 100, 250])
+    move_obj_list.append([resource.tree, width*0.3, height*0.85, 100, 250])
+    move_obj_list.append([resource.tree, width*0.7, height*0.85, 100, 250])
+    move_obj_list.append([resource.tree, width*0.9, height*0.85, 100, 250])
 
 def draw():
     GuardDebug()
@@ -116,7 +118,8 @@ def draw():
      space_anchor, is_final_phase, beanstalk_shaking_anim, \
      spacebar_shaking_anim, spacebar_list, \
      background_color, bird_list, bird_moving_anim, \
-     beanstalk_breaking_anim, breaking_sound
+     beanstalk_breaking_anim, breaking_sound, move_obj_list
+     
     background(background_color)
     current_time = millis()
     ellapse_time = current_time - prev_time
@@ -125,15 +128,15 @@ def draw():
     main_logger.debug("grow_height=" + str(grow_height))
     prev_time = current_time
     graphic.draw_star(stars)
-    #graphic.draw_objects(object_list)
     
+    graphic.draw_objects(move_obj_list)
+        
     if is_final_phase:
         beanstalk_shaking_anim.update(ellapse_time)
         spacebar_shaking_anim.update(ellapse_time)
         beanstalk_breaking_anim.update(ellapse_time)
         graphic.draw_static_objects(beanstalk7_list, flower_per_size, flower_anchor)
         graphic.draw_static_objects(spacebar_list, space_per_size, space_anchor)
-        
         return
     
     if grow_height < PHASE_1:
@@ -190,15 +193,9 @@ def keyPressed():
         elif grow_height >= PHASE_6:        
             is_final_phase = True
             try_break_beanstalk()
-    if mouseY >  WINDOW_HEIGHT:
-        for object_y in object_list:
-            object_y[2] -= 1
-    if mouseY <= WINDOW_HEIGHT/2:
-        for object_y in object_list:
-            object_y[2] += 1
 
 def mouseMoved():
-    global grow_height, background_color, is_final_phase, prev_mouse_x, prev_mouse_y, bird_list, bird_moving_anim
+    global grow_height, background_color, is_final_phase, prev_mouse_x, prev_mouse_y, bird_list, bird_moving_anim, move_obj_list
     grow_height = height - mouseY
     
     move_x = prev_mouse_x - mouseX 
@@ -210,8 +207,10 @@ def mouseMoved():
     if is_final_phase:
         return
     
-    for obj in bird_list:
-        bird_moving_anim.offset += move_y * 1
+    bird_moving_anim.offset += move_y * 2
+    
+    for obj in move_obj_list:
+        obj[2] += move_y * 1
     
     if mouseY >= height * 0.75: #skyblue-pink
         background_color = lerpColor(color(255, 192, 203), color(135, 206, 250), (mouseY - height * 0.75) / (height * 0.25))
