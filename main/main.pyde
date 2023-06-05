@@ -112,7 +112,8 @@ def setup():
     move_obj_list.append([resource.tree, width*0.3, height*0.85, 100, 250])
     move_obj_list.append([resource.tree, width*0.7, height*0.85, 100, 250])
     move_obj_list.append([resource.tree, width*0.9, height*0.85, 100, 250])
-    move_obj_list2.append([resource.sun, width*0.9, height*0.15, 100, 250])
+    move_obj_list2.append([resource.sun, width*0.1, height*0.15, 100, 250])
+    move_obj_list2.append([resource.moon, width*0.9, -height, 100, 250])
 
 def draw():
     GuardDebug()
