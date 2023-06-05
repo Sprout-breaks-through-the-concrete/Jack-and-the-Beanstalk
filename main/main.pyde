@@ -117,21 +117,26 @@ def setup():
     move_obj_list.append([resource.tree, width*0.7, height*0.85, 100, 250])
     move_obj_list.append([resource.tree, width*0.9, height*0.85, 100, 250])
     
-    move_obj_list_sky.append([resource2.cloud1, width*0.01, height*0.05 - height * 0.2, 90, 60])
-    move_obj_list_sky.append([resource2.cloud1, width*0.3, height*0.1 - height * 0.2, 60, 40])
-    move_obj_list_sky.append([resource2.cloud1, width, height*0.25 - height * 0.2, 90, 60])
-    move_obj_list_sky.append([resource2.cloud1, width*0.8, height*0.2 - height * 0.2, 60, 40])
-    move_obj_list_sky.append([resource2.cloud1, width*0.5, height*0.25 - height * 0.2, 60, 40])
-    move_obj_list_sky.append([resource2.cloud1, width*0.7, height*0.01 - height * 0.2, 60, 40])
-    move_obj_list_sky.append([resource2.chicken, width*0.5, height*0.2 - height * 0.2, 50, 60])
-    move_obj_list_sky.append([resource2.pocket, width*0.8, height*0.15 - height * 0.2, 60, 60])
-    move_obj_list_sky.append([resource2.haff, width*0.3, height*0.07 - height * 0.2, 60, 60]) 
+    move_obj_list_sky.append([resource2.cloud1, width*0.01, height*0.05, 90, 60])
+    move_obj_list_sky.append([resource2.cloud1, width*0.3, height*0.1, 60, 40])
+    move_obj_list_sky.append([resource2.cloud1, width, height*0.25, 90, 60])
+    move_obj_list_sky.append([resource2.cloud1, width*0.8, height*0.2, 60, 40])
+    move_obj_list_sky.append([resource2.cloud1, width*0.5, height*0.25, 60, 40])
+    move_obj_list_sky.append([resource2.cloud1, width*0.7, height*0.01, 60, 40])
+    move_obj_list_sky.append([resource2.chicken, width*0.5, height*0.2, 50, 60])
     
-    sky_moving_anim = animation.BirdMoving(move_obj_list_sky, -50, width + 50, 0, 4, 0, 0)
+    sky_moving_anim = animation.BirdMoving(move_obj_list_sky, -50, width + 50, 0, 2, 0, 20)
     
-    move_obj_list2.append([resource.sun, width*0.1, height*0.15, 100, 250])
-    move_obj_list2.append([resource.moon, width*0.9, -height, 100, 250])
+    move_obj_list2.append([resource.sun, width*0.1, -200, 100, 250])
     
+    move_obj_list_space.append([resource2.wire, width*0.9, -height * 2, 5, 250])
+    move_obj_list_space.append([resource.moon, width*0.9, -height - 600, 100, 250])
+    move_obj_list_space.append([resource2.wire, width*0.15, -height * 2, 5, 500])
+    move_obj_list_space.append([resource2.haff, width*0.15, -height - 550, 60, 60])
+    move_obj_list_space.append([resource2.wire, width*0.6, -height * 2, 3, 200])
+    move_obj_list_space.append([resource2.haff, width*0.6, -height - 700, 40, 40])
+    move_obj_list_space.append([resource2.wire, width*0.35, -height * 2, 5, 250])
+    move_obj_list_space.append([resource2.pocket, width*0.35, -height - 680, 60, 60])
 
 def draw():
     GuardDebug()
@@ -158,6 +163,7 @@ def draw():
     graphic.draw_objects(move_obj_list)
     graphic.draw_objects(move_obj_list2)
     graphic.draw_objects(move_obj_list_sky)
+    graphic.draw_objects(move_obj_list_space)
         
     if is_final_phase:
         beanstalk_shaking_anim.update(ellapse_time)
@@ -248,15 +254,18 @@ def mouseMoved():
     for obj in move_obj_list2:
         obj[2] += move_y * 2
         
+    for obj in move_obj_list_space:
+        obj[2] += move_y * 2
+        
     sky_moving_anim.offset += move_y * 2
     
     star_offset += move_y * 1
     
-    if mouseY >= height * 0.75: #skyblue-pink
-        background_color = lerpColor(color(255, 192, 203), color(135, 206, 250), (mouseY - height * 0.75) / (height * 0.25))
-    elif mouseY >= height * 0.5: #pink-purple
-        background_color = lerpColor(color(128, 0, 128), color(255, 192, 203), (mouseY - height * 0.5) / (height * 0.25))
-    elif mouseY >= height * 0.25:  #purple-navy
-        background_color = lerpColor(color(0, 0, 128), color(128, 0, 128), (mouseY - height * 0.25) / (height * 0.25))
+    if mouseY >= height * 0.55: #skyblue-pink
+        background_color = lerpColor(color(255, 192, 203), color(135, 206, 250), (mouseY - height * 0.55) / (height * 0.25))
+    elif mouseY >= height * 0.3: #pink-purple
+        background_color = lerpColor(color(128, 0, 128), color(255, 192, 203), (mouseY - height * 0.3) / (height * 0.25))
+    elif mouseY >= height * 0.05:  #purple-navy
+        background_color = lerpColor(color(0, 0, 128), color(128, 0, 128), (mouseY - height * 0.05) / (height * 0.25))
     else: #navy-black
-        background_color = lerpColor(color(0, 0, 0), color(0, 0, 128), mouseY / (height * 0.25))
+        background_color = lerpColor(color(0, 0, 0), color(0, 0, 128), mouseY / (height * 0.05))

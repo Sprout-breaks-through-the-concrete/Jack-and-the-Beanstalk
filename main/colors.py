@@ -16,3 +16,6 @@ VIOLET = color(238, 130, 238)
 LIMEGREEN = color(50, 205, 50)
 POWDERBLUE = color(176, 224, 230)
 EMPTY = None
+
+WIRE_LIGHT = color(220, 187, 142)
+WIRE_DARK = color(167, 123, 77)

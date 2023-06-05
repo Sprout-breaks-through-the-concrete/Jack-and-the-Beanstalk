@@ -92,3 +92,6 @@ chicken.append([colors.EMPTY,colors.EMPTY,colors.WHITE,colors.WHITE,colors.WHITE
 chicken.append([colors.EMPTY,colors.EMPTY,colors.WHITE,colors.WHITE,colors.WHITE,colors.WHITE,colors.WHITE,colors.WHITE,colors.WHITE,colors.WHITE,colors.WHITE,])
 chicken.append([colors.EMPTY,colors.EMPTY,colors.EMPTY,colors.RED,colors.EMPTY,colors.EMPTY,colors.EMPTY,colors.RED,colors.EMPTY,colors.EMPTY,colors.EMPTY])
 chicken.append([colors.EMPTY,colors.EMPTY,colors.RED,colors.RED,colors.RED,colors.EMPTY,colors.RED,colors.RED,colors.RED,colors.EMPTY,colors.EMPTY])
+
+wire = []
+wire.append([colors.WIRE_LIGHT, colors.WIRE_LIGHT, colors.WIRE_DARK])
