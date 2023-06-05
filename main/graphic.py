@@ -65,7 +65,7 @@ def draw_object(resource, center_x, center_y, draw_width, draw_height, anchor):
             if obj_color is not None:
                 draw_pixel(draw_x, draw_y, obj_color, per_width, per_height)
             
-def draw_star(star):
+def draw_star(star, offset):
     Guard()
     prev_color = g.fillColor
     fill(STAR_COLOR)
@@ -74,7 +74,7 @@ def draw_star(star):
     
     beginShape()
     for vertex_pos in star:
-        vertex(vertex_pos[0], vertex_pos[1])
+        vertex(vertex_pos[0], vertex_pos[1] + offset)
         vertex_idx += 1
         
         # one star haves 10 vertexs 

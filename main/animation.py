@@ -79,7 +79,6 @@ class BirdMoving:
                 self.obj_x_pos[idx] += self.move_speed
                 obj[1] = self.obj_x_pos[idx]
                 weight = -sin(TWO_PI * norm((self.obj_x_pos[idx] - self.start_x) / (self.end_x - self.start_x), -1, 1))
-                print(weight)
                 obj[2] = self.obj_heights[idx] + self.moving_height * weight + self.offset
                 
                 if self.obj_x_pos[idx] > self.end_x:

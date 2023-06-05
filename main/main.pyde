@@ -20,9 +20,11 @@ main_logger.info(message)
 main_logger.warning(message)
 main_logger.warning(message)
 """
+
 main_logger = logger.get("main")
 
 stars = []
+star_offset = -900
 object_list = []
 beanstalk1_list = []
 beanstalk2_list = []
@@ -40,6 +42,7 @@ space_anchor = graphic.RIGHT
 spacebar_shaking_anim = None
 
 move_obj_list = []
+move_obj_list2 = []
 
 prev_mouse_x = 0
 prev_mouse_y = 0
@@ -66,7 +69,8 @@ def setup():
     spacebar, spacebar_list, grow_height, \
     background_color, bird_list, bird_moving_anim, \
     beanstalk_breaking_anim, breaking_sound, bird_sound, \
-    prev_mouse_x, prev_mouse_y, move_obj_list
+    prev_mouse_x, prev_mouse_y, move_obj_list, \
+    move_obj_list2
     
     
     prev_mouse_x = width * 0.5
@@ -94,7 +98,7 @@ def setup():
     beanstalk7_list.append(breaking_target)
     spacebar = [resource.spacebar, width * 0.95, height * 0.5, 60, 40]
     spacebar_list.append(spacebar)
-    #spacebar_list.append(spacebar)
+    
     spacebar_shaking_anim = animation.Shaking(spacebar, 500, 1, 0, 10, True)
     spacebar_shaking_anim.start()
     background_color = color(135, 206, 250)
@@ -108,6 +112,7 @@ def setup():
     move_obj_list.append([resource.tree, width*0.3, height*0.85, 100, 250])
     move_obj_list.append([resource.tree, width*0.7, height*0.85, 100, 250])
     move_obj_list.append([resource.tree, width*0.9, height*0.85, 100, 250])
+    move_obj_list2.append([resource.sun, width*0.9, height*0.15, 100, 250])
 
 def draw():
     GuardDebug()
@@ -118,7 +123,8 @@ def draw():
      space_anchor, is_final_phase, beanstalk_shaking_anim, \
      spacebar_shaking_anim, spacebar_list, \
      background_color, bird_list, bird_moving_anim, \
-     beanstalk_breaking_anim, breaking_sound, move_obj_list
+     beanstalk_breaking_anim, breaking_sound, move_obj_list, \
+     star_offset, move_obj_list2
      
     background(background_color)
     current_time = millis()
@@ -127,9 +133,10 @@ def draw():
     main_logger.debug("grow_time=" + str(grow_time))
     main_logger.debug("grow_height=" + str(grow_height))
     prev_time = current_time
-    graphic.draw_star(stars)
+    graphic.draw_star(stars, star_offset)
     
     graphic.draw_objects(move_obj_list)
+    graphic.draw_objects(move_obj_list2)
         
     if is_final_phase:
         beanstalk_shaking_anim.update(ellapse_time)
@@ -195,7 +202,7 @@ def keyPressed():
             try_break_beanstalk()
 
 def mouseMoved():
-    global grow_height, background_color, is_final_phase, prev_mouse_x, prev_mouse_y, bird_list, bird_moving_anim, move_obj_list
+    global grow_height, background_color, is_final_phase, prev_mouse_x, prev_mouse_y, bird_list, bird_moving_anim, move_obj_list, star_offset, move_obj_list2
     grow_height = height - mouseY
     
     move_x = prev_mouse_x - mouseX 
@@ -211,6 +218,11 @@ def mouseMoved():
     
     for obj in move_obj_list:
         obj[2] += move_y * 1
+    
+    for obj in move_obj_list2:
+        obj[2] += move_y * 2
+    
+    star_offset += move_y * 1
     
     if mouseY >= height * 0.75: #skyblue-pink
         background_color = lerpColor(color(255, 192, 203), color(135, 206, 250), (mouseY - height * 0.75) / (height * 0.25))
