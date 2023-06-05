@@ -43,6 +43,10 @@ spacebar_shaking_anim = None
 
 move_obj_list = []
 move_obj_list2 = []
+move_obj_list_sky = []
+move_obj_list_space = []
+
+sky_moving_anim = None
 
 prev_mouse_x = 0
 prev_mouse_y = 0
@@ -70,8 +74,8 @@ def setup():
     background_color, bird_list, bird_moving_anim, \
     beanstalk_breaking_anim, breaking_sound, bird_sound, \
     prev_mouse_x, prev_mouse_y, move_obj_list, \
-    move_obj_list2
-    
+    move_obj_list2, move_obj_list_sky, move_obj_list_space, \
+    sky_moving_anim
     
     prev_mouse_x = width * 0.5
     prev_mouse_y = height
@@ -112,8 +116,22 @@ def setup():
     move_obj_list.append([resource.tree, width*0.3, height*0.85, 100, 250])
     move_obj_list.append([resource.tree, width*0.7, height*0.85, 100, 250])
     move_obj_list.append([resource.tree, width*0.9, height*0.85, 100, 250])
+    
+    move_obj_list_sky.append([resource2.cloud1, width*0.01, height*0.05 - height * 0.2, 90, 60])
+    move_obj_list_sky.append([resource2.cloud1, width*0.3, height*0.1 - height * 0.2, 60, 40])
+    move_obj_list_sky.append([resource2.cloud1, width, height*0.25 - height * 0.2, 90, 60])
+    move_obj_list_sky.append([resource2.cloud1, width*0.8, height*0.2 - height * 0.2, 60, 40])
+    move_obj_list_sky.append([resource2.cloud1, width*0.5, height*0.25 - height * 0.2, 60, 40])
+    move_obj_list_sky.append([resource2.cloud1, width*0.7, height*0.01 - height * 0.2, 60, 40])
+    move_obj_list_sky.append([resource2.chicken, width*0.5, height*0.2 - height * 0.2, 50, 60])
+    move_obj_list_sky.append([resource2.pocket, width*0.8, height*0.15 - height * 0.2, 60, 60])
+    move_obj_list_sky.append([resource2.haff, width*0.3, height*0.07 - height * 0.2, 60, 60]) 
+    
+    sky_moving_anim = animation.BirdMoving(move_obj_list_sky, -50, width + 50, 0, 4, 0, 0)
+    
     move_obj_list2.append([resource.sun, width*0.1, height*0.15, 100, 250])
     move_obj_list2.append([resource.moon, width*0.9, -height, 100, 250])
+    
 
 def draw():
     GuardDebug()
@@ -125,7 +143,8 @@ def draw():
      spacebar_shaking_anim, spacebar_list, \
      background_color, bird_list, bird_moving_anim, \
      beanstalk_breaking_anim, breaking_sound, move_obj_list, \
-     star_offset, move_obj_list2
+     star_offset, move_obj_list2, move_obj_list_sky, \
+     move_obj_list_space, sky_moving_anim
      
     background(background_color)
     current_time = millis()
@@ -138,6 +157,7 @@ def draw():
     
     graphic.draw_objects(move_obj_list)
     graphic.draw_objects(move_obj_list2)
+    graphic.draw_objects(move_obj_list_sky)
         
     if is_final_phase:
         beanstalk_shaking_anim.update(ellapse_time)
@@ -172,6 +192,7 @@ def draw():
         pass    
         
     bird_moving_anim.update(ellapse_time)
+    sky_moving_anim.update(ellapse_time)
     graphic.draw_objects(bird_list)
     
     if bird_moving_anim.is_show():
@@ -203,7 +224,11 @@ def keyPressed():
             try_break_beanstalk()
 
 def mouseMoved():
-    global grow_height, background_color, is_final_phase, prev_mouse_x, prev_mouse_y, bird_list, bird_moving_anim, move_obj_list, star_offset, move_obj_list2
+    global grow_height, background_color, is_final_phase, \
+    prev_mouse_x, prev_mouse_y, bird_list, \
+    bird_moving_anim, move_obj_list, star_offset, \
+    move_obj_list2, move_obj_list_sky, move_obj_list_space
+    
     grow_height = height - mouseY
     
     move_x = prev_mouse_x - mouseX 
@@ -222,6 +247,8 @@ def mouseMoved():
     
     for obj in move_obj_list2:
         obj[2] += move_y * 2
+        
+    sky_moving_anim.offset += move_y * 2
     
     star_offset += move_y * 1
     
