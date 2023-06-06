@@ -59,7 +59,11 @@ is_final_phase = False
 break_count = 0
 break_sound = None
 breaking_sound = None
-break_max_count = 3
+growing_sound = None
+growing_sound_ellapsed = 0.0
+break_max_count = 10
+
+background_sound = None
 
 breaking_target = None
 beanstalk_shaking_anim = None
@@ -75,7 +79,7 @@ def setup():
     beanstalk_breaking_anim, breaking_sound, bird_sound, \
     prev_mouse_x, prev_mouse_y, move_obj_list, \
     move_obj_list2, move_obj_list_sky, move_obj_list_space, \
-    sky_moving_anim
+    sky_moving_anim, growing_sound, background_sound
     
     prev_mouse_x = width * 0.5
     prev_mouse_y = height
@@ -83,7 +87,11 @@ def setup():
     break_sound = SoundFile(this, "treechop.wav")
     breaking_sound = SoundFile(this, "tree-falling.wav")
     bird_sound = SoundFile(this, "bird_sound.wav")
+    growing_sound = SoundFile(this, "plant-growing.wav")
+    background_sound = SoundFile(this, "sky-loop.wav")
 
+    background_sound.loop()
+    
     if USE_STROKE == False:
         noStroke()
         
@@ -116,6 +124,14 @@ def setup():
     move_obj_list.append([resource.tree, width*0.3, height*0.85, 100, 250])
     move_obj_list.append([resource.tree, width*0.7, height*0.85, 100, 250])
     move_obj_list.append([resource.tree, width*0.9, height*0.85, 100, 250])
+    move_obj_list.append([resource.flower, width*0.05, height*0.97, 30, 70])
+    move_obj_list.append([resource.flower, width*0.15, height*0.97, 30, 70])
+    move_obj_list.append([resource.flower, width*0.25, height*0.97, 30, 70])
+    move_obj_list.append([resource.flower, width*0.35, height*0.97, 30, 70])
+    move_obj_list.append([resource.flower, width*0.65, height*0.97, 30, 70])
+    move_obj_list.append([resource.flower, width*0.75, height*0.97, 30, 70])
+    move_obj_list.append([resource.flower, width*0.85, height*0.97, 30, 70])
+    move_obj_list.append([resource.flower, width*0.95, height*0.97, 30, 70])
     
     move_obj_list_sky.append([resource2.cloud1, width*0.01, height*0.05, 90, 60])
     move_obj_list_sky.append([resource2.cloud1, width*0.3, height*0.1, 60, 40])
@@ -129,7 +145,7 @@ def setup():
     
     move_obj_list2.append([resource.sun, width*0.1, -200, 100, 250])
     
-    move_obj_list_space.append([resource2.wire, width*0.9, -height * 2, 5, 250])
+    move_obj_list_space.append([resource2.wire, width*0.9, -height * 2 + 100, 5, 300])
     move_obj_list_space.append([resource.moon, width*0.9, -height - 600, 100, 250])
     move_obj_list_space.append([resource2.wire, width*0.15, -height * 2, 5, 500])
     move_obj_list_space.append([resource2.haff, width*0.15, -height - 550, 60, 60])
@@ -149,7 +165,8 @@ def draw():
      background_color, bird_list, bird_moving_anim, \
      beanstalk_breaking_anim, breaking_sound, move_obj_list, \
      star_offset, move_obj_list2, move_obj_list_sky, \
-     move_obj_list_space, sky_moving_anim
+     move_obj_list_space, sky_moving_anim, growing_sound_ellapsed, \
+     growing_sound
      
     background(background_color)
     current_time = millis()
@@ -164,7 +181,7 @@ def draw():
     graphic.draw_objects(move_obj_list2)
     graphic.draw_objects(move_obj_list_sky)
     graphic.draw_objects(move_obj_list_space)
-        
+    
     if is_final_phase:
         beanstalk_shaking_anim.update(ellapse_time)
         spacebar_shaking_anim.update(ellapse_time)
@@ -172,6 +189,12 @@ def draw():
         graphic.draw_static_objects(beanstalk7_list, flower_per_size, flower_anchor)
         graphic.draw_static_objects(spacebar_list, space_per_size, space_anchor)
         return
+    
+    if growing_sound.isPlaying():
+        growing_sound_ellapsed += ellapse_time
+        if growing_sound_ellapsed > 1000.0:
+            growing_sound.pause()
+            pass
     
     if grow_height < PHASE_1:
         graphic.draw_static_objects(beanstalk1_list, flower_per_size, flower_anchor)
@@ -233,11 +256,12 @@ def mouseMoved():
     global grow_height, background_color, is_final_phase, \
     prev_mouse_x, prev_mouse_y, bird_list, \
     bird_moving_anim, move_obj_list, star_offset, \
-    move_obj_list2, move_obj_list_sky, move_obj_list_space
+    move_obj_list2, move_obj_list_sky, move_obj_list_space, \
+    growing_sound, growing_sound_ellapsed
     
     grow_height = height - mouseY
     
-    move_x = prev_mouse_x - mouseX 
+    move_x = mouseX - prev_mouse_x 
     move_y = prev_mouse_y - mouseY
     
     prev_mouse_x = mouseX
@@ -245,6 +269,13 @@ def mouseMoved():
     
     if is_final_phase:
         return
+    
+    if move_y > 0:
+        grow_weight = (growing_sound.duration() - 4.0) * norm(grow_height, 0, height)
+        print(grow_weight)
+        growing_sound.cue(grow_weight)
+        growing_sound.play()
+        growing_sound_ellapsed = 0.0
     
     bird_moving_anim.offset += move_y * 2
     
