@@ -87,6 +87,7 @@ def setup():
     break_sound = SoundFile(this, "treechop.wav")
     breaking_sound = SoundFile(this, "tree-falling.wav")
     bird_sound = SoundFile(this, "bird_sound.wav")
+    bird_sound.amp(0.5)
     growing_sound = SoundFile(this, "plant-growing.wav")
     background_sound = SoundFile(this, "sky-loop.wav")
 
@@ -237,10 +238,11 @@ def try_break_beanstalk():
     break_count += 1
     
     if break_max_count == break_count:
+        break_sound.play()
         breaking_sound.play()
         beanstalk_breaking_anim.start()
     else:
-        break_sound.play()    
+        break_sound.play()
         beanstalk_shaking_anim.start()
 
 def keyPressed():
